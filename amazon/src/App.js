@@ -1,11 +1,11 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ProductScreen from "./screen/ProductScreen";
 import HomeScreen from "./screen/HomeScreen";
 
 function App() {
   return (
-    <BrowserRouter>
+    <Router>
       <div className="grid-container">
         <header className="row">
           <div>
@@ -26,7 +26,7 @@ function App() {
         </main>
         <footer className="row center">All right reserved</footer>
       </div>
-    </BrowserRouter>
+    </Router>
   );
 }
 

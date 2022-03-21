@@ -1,11 +1,11 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Router } from "react-router-dom";
 import ProductScreen from "./screen/ProductScreen";
 import HomeScreen from "./screen/HomeScreen";
 
 function App() {
   return (
-    <Routes>
+    <Router>
       {/* <div className="grid-container"> */}
       {/* <header className="row">
           <div>
@@ -19,12 +19,12 @@ function App() {
           </div>
         </header> */}
       {/* <main> */}
-      <Route path="/" element={<HomeScreen />} />
+      <Route path="/" component={HomeScreen} />
       {/* <Route path="/product/:id" element={<ProductScreen />} /> */}
       {/* </main>
         <footer className="row center">All right reserved</footer> */}
       {/* </div> */}
-    </Routes>
+    </Router>
   );
 }
 

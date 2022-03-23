@@ -9,7 +9,7 @@ export const listProducts = () => {
   return async (dispatch) => {
     dispatch({ type: PRODUCT_LIST_REQUEST });
     try {
-      const response = await axios.get("/api/products");
+      const response = await axios.get("api/products/");
       console.log("axios response", response);
       return dispatch({ type: PRODUCT_LIST_SUCCESS, payload: response });
     } catch (error) {

@@ -3,14 +3,14 @@ import {
   PRODUCT_LIST_REQUEST,
   PRODUCT_LIST_SUCCESS,
 } from "../constants/productConstants";
-import { Axios } from "axios";
+import axios from "axios";
 
-export const listProducts = () => async (dispatch) => {
+export const listProducts = async (dispatch) => {
   dispatch({ type: PRODUCT_LIST_REQUEST });
   try {
-    const { data } = await Axios.get("/api/products");
+    const { data } = await axios.get("api/products/");
+    console.log(data.products);
     dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
-    console.log(data);
   } catch (error) {
     dispatch({ type: PRODUCT_LIST_FAIL, payload: error.message });
   }

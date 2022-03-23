@@ -4,7 +4,6 @@ import {
   PRODUCT_LIST_SUCCESS,
 } from "../constants/productConstants";
 import axios from "axios";
-
 export const listProducts = () => {
   return async (dispatch) => {
     dispatch({ type: PRODUCT_LIST_REQUEST });

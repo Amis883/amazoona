@@ -7,7 +7,7 @@ app.get("/api/products", (req, res) => {
 app.get("/", (req, res) => {
   res.send("Server is ready");
 });
-const port = 5000;
-app.listen(5000, () => {
+const port = 2022;
+app.listen(2022, () => {
   console.log(`Server at http://localhost:${port}`);
 });

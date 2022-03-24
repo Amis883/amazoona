@@ -5,10 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import { detailsProduct } from "../actions/productActions";
-export default function ProductScreen({ match }) {
+export default function ProductScreen() {
   const dispatch = useDispatch();
-  const { id: productId } = useParams;
-
+  const { id: productId } = useParams();
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
   useEffect(() => {

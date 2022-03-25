@@ -17,7 +17,6 @@ export default function ProductScreen(props) {
   }, [dispatch, productId]);
   const addToCartHandler = () => {
     navigate(`/cart/${productId}?qty=${qty}`);
-    console.log(qty);
   };
   return (
     <div>
@@ -76,7 +75,7 @@ export default function ProductScreen(props) {
                           <div>
                             <select
                               value={qty}
-                              onChange={(e) => e.target.value}
+                              onChange={(e) => setQty(e.target.value)}
                             >
                               {[...Array(product.countInStock).keys()].map(
                                 (x) => (

@@ -1,6 +1,14 @@
 import express from "express";
-import data from "./data.js";
+import mongoose from "mongoose";
+import data from "./data";
+import userRouter from "./routers/userRouter.js";
+
 const app = express();
+mongoose.connect("mongodb://localhost/amazoona", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+});
 
 app.get("/api/products/:id", (req, res) => {
   const product = data.products.find((x) => x._id === req.params.id);
@@ -13,6 +21,7 @@ app.get("/api/products/:id", (req, res) => {
 app.get("/api/products", (req, res) => {
   res.send(data.products);
 });
+app.use("/api/users", userRouter);
 app.get("/", (req, res) => {
   res.send("Server is ready");
 });

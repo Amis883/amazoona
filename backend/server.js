@@ -25,6 +25,9 @@ app.use("/api/users", userRouter);
 app.get("/", (req, res) => {
   res.send("Server is ready");
 });
+app.use((err, req, res, next) => {
+  res.status(2022).send({ message: err.message });
+});
 const port = 2022;
 app.listen(2022, () => {
   console.log(`Server at http://localhost:${port}`);

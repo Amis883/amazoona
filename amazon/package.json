@@ -2,6 +2,7 @@
   "name": "amazon",
   "proxy": "http://127.0.0.1:2022",
   "version": "0.1.0",
+  "type":"module",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.2",

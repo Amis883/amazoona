@@ -7,7 +7,6 @@ const app = express();
 mongoose.connect("mongodb://localhost/amazoona", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  useCreateIndex: true,
 });
 
 app.get("/api/products/:id", (req, res) => {

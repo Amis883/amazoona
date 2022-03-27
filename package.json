@@ -22,7 +22,7 @@
   },
   "scripts": {
     "build": "cd amazon && yarn add && yarn run build",
-    "start": "nodemon --watch backend --exec node --experimental-modules --es-module-specifier-resolution=node backend/server.js"
+    "start": "nodemon --watch backend --exec node --es-module-specifier-resolution=node --experimental-modules  backend/server.js"
   },
   "eslintConfig": {
     "extends": [

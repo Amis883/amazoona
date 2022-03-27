@@ -4,7 +4,7 @@ import data from "./data";
 import userRouter from "./routers/userRouter.js";
 
 const app = express();
-mongoose.connect("mongodb://localhost/amazoona", {
+mongoose.connect("mongodb://localhost:27017", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -25,9 +25,9 @@ app.get("/", (req, res) => {
   res.send("Server is ready");
 });
 app.use((err, req, res, next) => {
-  res.status(2022).send({ message: err.message });
+  res.status(500).send({ message: err.message });
 });
-const port = 2022;
+const port = process.env.PORT || 2022;
 app.listen(2022, () => {
   console.log(`Server at http://localhost:${port}`);
 });

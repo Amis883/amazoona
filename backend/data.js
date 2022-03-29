@@ -17,7 +17,6 @@ const data = {
   ],
   products: [
     {
-      _id: "1",
       name: "Nike Slim Shirt",
       category: "Shirt",
       image: "/images/p1.jpg",
@@ -29,7 +28,6 @@ const data = {
       description: "high quality product",
     },
     {
-      _id: "2",
       name: "Adidas Fit Shirt",
       category: "Shirt",
       image: "/images/p3.jpg",
@@ -41,34 +39,29 @@ const data = {
       description: "high quality product",
     },
     {
-      _id: "3",
       name: "Lacoste Free Shirt",
       category: "Shirt",
       image: "/images/p3.jpg",
       price: 220,
       countInStock: 40,
-
       brand: "Nike",
       rating: 4.5,
       numReviews: 12,
       description: "high quality product",
     },
     {
-      _id: "4",
       name: "Nike Slim Pants",
       category: "Pants",
       image: "/images/p5.jpg",
       price: 78,
       countInStock: 10,
-
       brand: "Nike",
       rating: 4.5,
       numReviews: 14,
       description: "high quality product",
     },
     {
-      _id: "5",
-      name: "Adidas Slim Pants",
+      name: "Adidas Slim Pants ",
       category: "Shirt",
       image: "/images/p6.jpg",
       price: 330,
@@ -79,8 +72,7 @@ const data = {
       description: "high quality product",
     },
     {
-      _id: "6",
-      name: "Adidas Slim Pants",
+      name: "Adidas Slim Pants sade",
       category: "Shirt",
       image: "/images/p5.jpg",
       price: 200,

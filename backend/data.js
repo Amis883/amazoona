@@ -50,7 +50,7 @@ const data = {
       description: "high quality product",
     },
     {
-      name: "Nike Slim Pants",
+      name: "Nike Slim Pantss",
       category: "Pants",
       image: "/images/p5.jpg",
       price: 78,

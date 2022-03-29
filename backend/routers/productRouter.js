@@ -8,6 +8,8 @@ productRouter.get(
   "/",
   expressAsyncHandler(async (req, res) => {
     const products = await Product.find({});
+    await Product.remove({});
+
     res.send({ products });
   })
 );

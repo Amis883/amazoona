@@ -1,13 +1,29 @@
 import express from "express";
 import mongoose from "mongoose";
-import data from "./data";
+import data from "./data.js";
 import userRouter from "./routers/userRouter.js";
 
 const app = express();
-mongoose.connect("mongodb://localhost:27017", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+const connectDB = async () => {
+  try {
+    //database Name
+    const databaseName = "amazoona";
+    const con = await mongoose.connect(
+      `mongodb://127.0.0.1:27888/${databaseName}`,
+      {
+        authSource: "admin",
+        user: "mongoadmin",
+        pass: "secret",
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      }
+    );
+    console.log(`Database connected : ${con.connection.host}`);
+  } catch (error) {
+    console.error(`Error: ${error.message}`);
+    process.exit(1);
+  }
+};
 
 app.get("/api/products/:id", (req, res) => {
   const product = data.products.find((x) => x._id === req.params.id);
@@ -28,6 +44,14 @@ app.use((err, req, res, next) => {
   res.status(500).send({ message: err.message });
 });
 const port = process.env.PORT || 2022;
-app.listen(2022, () => {
-  console.log(`Server at http://localhost:${port}`);
-});
+try {
+  (async () => {
+    await connectDB();
+
+    app.listen(port, () => {
+      console.log(`Server at http://localhost:${port}`);
+    });
+  })();
+} catch (e) {
+  console.log(e);
+}

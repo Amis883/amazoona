@@ -17,7 +17,7 @@ const data = {
   ],
   products: [
     {
-      name: "Nike Slim Shirt",
+      name: "Nike Slims Shirt",
       category: "Shirt",
       image: "/images/p1.jpg",
       price: 120,
@@ -28,7 +28,7 @@ const data = {
       description: "high quality product",
     },
     {
-      name: "Adidas Fit Shirt",
+      name: "Adidass Fit Shirt",
       category: "Shirt",
       image: "/images/p3.jpg",
       price: 100,
@@ -39,7 +39,7 @@ const data = {
       description: "high quality product",
     },
     {
-      name: "Lacoste Free Shirt",
+      name: "Lacoste Free Shirts",
       category: "Shirt",
       image: "/images/p3.jpg",
       price: 220,

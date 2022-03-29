@@ -11,6 +11,7 @@
     "bcrypt": "^5.0.1",
     "connected-react-router": "^6.9.2",
     "dotenv": "^16.0.0",
+    "eslint-visitor-keys": "^3.3.0",
     "express": "^4.17.3",
     "express-async-handler": "^1.2.0",
     "init": "^0.1.2",

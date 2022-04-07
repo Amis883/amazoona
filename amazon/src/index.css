@@ -199,6 +199,7 @@ margin: 0.1rem;
   color: #a02020;
   background-color: #ffe0e0;
 }
+
 /* Form */
 .form{
   max-width: 60rem;
@@ -211,7 +212,6 @@ margin: 0.1rem;
 }
 .form label{
   margin: 1rem 0;
-  display: block;
 }
 /* Dropdown */
 .dropdown {

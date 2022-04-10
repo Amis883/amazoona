@@ -1,6 +1,7 @@
 import express from "express";
 import expressAsyncHandler from "express-async-handler";
-import { isAuth } from "../utils";
+import { isAuth } from "../utils.js";
+import Order from "../models/orderModal";
 const orderRouter = express.Router();
 orderRouter.post(
   "/",
@@ -10,7 +11,6 @@ orderRouter.post(
       res.status(400).send({ message: "Cart is empty" });
     } else {
       const order = new Order({
-        seller: req.body.orderItems[0].seller,
         orderItems: req.body.orderItems,
         shippingAddress: req.body.shippingAddress,
         paymentMethod: req.body.paymentMethod,

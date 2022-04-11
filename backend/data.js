@@ -82,6 +82,17 @@ const data = {
       numReviews: 23,
       description: "high quality product",
     },
+    {
+      name: "Adidas Slims Pants ",
+      category: "Shirt",
+      image: "/images/p6.jpg",
+      price: 330,
+      countInStock: 25,
+      brand: "Adidas",
+      rating: 4.5,
+      numReviews: 19,
+      description: "high quality product",
+    },
   ],
 };
 export default data;

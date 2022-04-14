@@ -106,7 +106,7 @@ function App() {
                   <ProfileScreen />
                 </PrivateRoute>
               }
-            />{" "}
+            />
             <Route path="/register" element={<RegisterScreen />} />
           </Routes>
         </main>

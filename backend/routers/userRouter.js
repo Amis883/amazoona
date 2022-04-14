@@ -3,7 +3,7 @@ import expressAsyncHandler from "express-async-handler";
 import data from "../data";
 import User from "../models/userModel";
 import bcrypt from "bcrypt";
-import { generateToken } from "../utils";
+import { generateToken, isAuth } from "../utils";
 
 const userRouter = express.Router();
 userRouter.get(
@@ -67,6 +67,7 @@ userRouter.get(
 );
 userRouter.put(
   "/profile",
+  isAuth,
   expressAsyncHandler(async (req, res) => {
     const user = await User.findById(req.user._id);
     if (user) {
@@ -82,6 +83,7 @@ userRouter.put(
         name: updatedUser.name,
         email: updatedUser.email,
         isAdmin: updatedUser.isAdmin,
+        isSeller: user.isSeller,
         token: generateToken(updatedUser),
       });
     }

@@ -2,10 +2,11 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { detailsOrder } from "../actions/orderActions";
+import { detailsOrder, payOrder } from "../actions/orderActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import { PayPalButton } from "react-paypal-button-v2";
+import { ORDER_PAY_RESET } from "../constants/orderConstants";
 export default function OrderScreen(props) {
   const params = useParams();
   const { id: orderId } = params;
@@ -15,7 +16,13 @@ export default function OrderScreen(props) {
   const orderDetails = useSelector((state) => state.orderDetails);
   const { order, loading, error } = orderDetails;
   const dispatch = useDispatch();
-
+  //get order pay from redux...get accssee to reduce and from the stste and i gonna get only orderpay
+  const orderPay = useSelector((state) => state.orderPay);
+  const {
+    loading: loadingPay,
+    error: errorPay,
+    success: successPay,
+  } = orderPay;
   useEffect(() => {
     const addPayPalScript = async () => {
       const { data } = await axios.get("/api/config/paypal");
@@ -31,7 +38,8 @@ export default function OrderScreen(props) {
       document.body.appendChild(script);
     };
     //order does not loaded from backend
-    if (!order || (order && order._id !== orderId)) {
+    if (!order || successPay || (order && order._id !== orderId)) {
+      dispatch({ type: ORDER_PAY_RESET });
       dispatch(detailsOrder(orderId));
     } else {
       //if i have order
@@ -46,8 +54,9 @@ export default function OrderScreen(props) {
       }
     }
   }, [dispatch, order, orderId, sdkReady]);
-  const successPaymentHandler = () => {
-    // todo
+  const successPaymentHandler = (paymentResult) => {
+    //paymentresult : is  result in payment  on paypal
+    dispatch(payOrder(order, paymentResult));
   };
   return loading ? (
     <LoadingBox></LoadingBox>
@@ -167,6 +176,10 @@ export default function OrderScreen(props) {
                     <LoadingBox></LoadingBox>
                   ) : (
                     <>
+                      {errorPay && (
+                        <MessageBox variant="danger">{errorPay}</MessageBox>
+                      )}
+                      {loadingPay && <LoadingBox>{}</LoadingBox>}
                       <PayPalButton
                         amount={order.totalPrice}
                         onSuccess={successPaymentHandler}

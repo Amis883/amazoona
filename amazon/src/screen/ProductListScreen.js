@@ -7,7 +7,7 @@ import MessageBox from "../components/MessageBox";
 import { PRODUCT_CREATE_RESET } from "../constants/productConstants";
 import { useNavigate } from "react-router-dom";
 
-export default function ProductListScreen(props) {
+export default function ProductListScreen() {
   const navigate = useNavigate();
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
@@ -27,7 +27,6 @@ export default function ProductListScreen(props) {
       navigate(`/product/${createdProduct._id}/edit`);
     }
   }, [createdProduct, dispatch, navigate, successCreate]);
-  console.log(createdProduct);
   const createHandler = () => {
     dispatch(createProduct());
   };
@@ -73,9 +72,7 @@ export default function ProductListScreen(props) {
                     <button
                       type="button"
                       className="small"
-                      onClick={() =>
-                        props.history.push(`/product/${product._id}/edit`)
-                      }
+                      onClick={() => navigate(`/product/${product._id}/edit`)}
                     >
                       Edit
                     </button>

@@ -96,7 +96,7 @@ function App() {
             <Route path="/cart/:id" element={<CartScreen />} />
             <Route path="/orderhistory" element={<OrderHistoryScreen />} />
             <Route path="/" element={<HomeScreen />} />
-            <Route path="/product/:id" element={<ProductScreen />} />
+            <Route path="/product/:id" element={<ProductScreen />} exact />
             <Route path="/shipping" element={<ShippingAddressScreen />} />
             <Route path="/payment" element={<PaymentMethodScreen />} />
             <Route path="/placeorder" element={<PlaceOrderScreen />} />

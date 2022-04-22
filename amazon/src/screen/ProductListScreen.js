@@ -1,23 +1,49 @@
 import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { listProducts } from "../actions/productActions";
+import { createProduct, listProducts } from "../actions/productActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
+import { PRODUCT_CREATE_RESET } from "../constants/productConstants";
+import { useNavigate } from "react-router-dom";
 
 export default function ProductListScreen(props) {
+  const navigate = useNavigate();
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
+  // getting data from product creates in redux store
+  const productCreate = useSelector((state) => state.productCreate);
+  const {
+    loading: loadingCreate,
+    error: errorCreate,
+    success: successCreate,
+    product: createdProduct,
+  } = productCreate;
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(listProducts());
-  }, [dispatch]);
+    // it means that I successfully created a product so I need to dispatch reset.
+    if (successCreate) {
+      dispatch({ type: PRODUCT_CREATE_RESET });
+      navigate(`/product/${createdProduct._id}/edit`);
+    }
+  }, [createdProduct, dispatch, navigate, successCreate]);
+  console.log(createdProduct);
+  const createHandler = () => {
+    dispatch(createProduct());
+  };
   const deleteHandler = () => {
-    //   todo
+    // todo
   };
   return (
     <div>
-      <h1>Products</h1>
+      <div className="row">
+        <h1>Products</h1>
+        <button type="button" className="primary" onClick={createHandler}>
+          Create Products
+        </button>
+      </div>
+      {loadingCreate && <LoadingBox></LoadingBox>}
+      {errorCreate && <MessageBox variant="danger">{errorCreate}</MessageBox>}
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (

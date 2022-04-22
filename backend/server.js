@@ -8,7 +8,6 @@ import orderRouter from "./routers/orderRouter";
 dotenv.config();
 const app = express();
 
-
 const connectDB = async () => {
   try {
     //database Name
@@ -23,7 +22,6 @@ const connectDB = async () => {
         useUnifiedTopology: true,
       }
     );
-    console.log(`Database connected : ${con.connection.host}`);
   } catch (error) {
     console.error(`Error: ${error.message}`);
     process.exit(1);

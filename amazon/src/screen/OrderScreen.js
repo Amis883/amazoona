@@ -53,6 +53,7 @@ export default function OrderScreen(props) {
         }
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, order, orderId, sdkReady]);
   const successPaymentHandler = (paymentResult) => {
     //paymentresult : is  result in payment  on paypal

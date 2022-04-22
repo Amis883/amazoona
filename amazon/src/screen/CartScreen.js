@@ -9,12 +9,12 @@ import MessageBox from "../components/MessageBox";
 export default function CartScreen() {
   const { id } = useParams();
   const { search } = useLocation();
+  // eslint-disable-next-line no-unused-vars
   const [searchParams] = useSearchParams();
   const productId = id;
   const qty = search ? Number(search.split("=")[1]) : 1;
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
-  console.log({ productId, qty, qtyParam: Number(searchParams.get("qty")) });
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

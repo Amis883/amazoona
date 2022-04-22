@@ -9,9 +9,9 @@ export default function HomeScreen() {
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
-  console.log(productList.products);
   useEffect(() => {
     dispatch(listProducts());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

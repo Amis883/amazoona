@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { detailsProduct } from "../actions/productActions";
+import { detailsProduct, updateProduct } from "../actions/productActions";
 import MessageBox from "../components/MessageBox";
 import LoadingBox from "../components/LoadingBox";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { PRODUCT_UPDATE_RESET } from "../constants/productConstants";
 
 export default function ProductEditScreen() {
   const dispatch = useDispatch();
@@ -17,15 +18,29 @@ export default function ProductEditScreen() {
   const [countInStock, setCountInStock] = useState("");
   const [brand, setBrand] = useState("");
   const [description, setDescription] = useState("");
-
+  const navigate = useNavigate();
   // products comes from products as store to get product this code
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
+
+  // we are going to do is to redirect user to the product list after update to do that
+  //so get the date about product update from redux store
+  const productUpdate = useSelector((state) => state.productUpdate);
+  const {
+    loading: loadingUpdate,
+    error: errorUpdate,
+    success: successUpdate,
+  } = productUpdate;
+
   //   we want to dispatch details products
   useEffect(() => {
+    if (successUpdate) {
+      navigate("/productlist");
+    }
     //if product exist then I am going to set values for react hook
     // product._id !== productId means if product exists and it's id does not equal to product ID,then details product
-    if (!product || product._id !== productId) {
+    if (!product || product._id !== productId || successUpdate) {
+      dispatch({ type: PRODUCT_UPDATE_RESET });
       dispatch(detailsProduct(productId));
     } else {
       //this product comes productDetails
@@ -37,17 +52,34 @@ export default function ProductEditScreen() {
       setBrand(product.brand);
       setDescription(product.description);
     }
-  }, [dispatch, product, productId]);
-  const submitHandler = () => {
-    //   TODO
+  }, [product, dispatch, productId, successUpdate, navigate]);
+
+  //update a record in the database
+  const submitHandler = (e) => {
+    e.preventDefault();
+    dispatch(
+      updateProduct({
+        _id: productId,
+        name,
+        price,
+        image,
+        category,
+        brand,
+        countInStock,
+        description,
+      })
+    );
   };
-  //   console.log(product);
+  console.log();
   return (
     <>
       <form className="form" onSubmit={submitHandler}>
         <div>
           <h1>Edit Product {productId}</h1>
         </div>
+        {loadingUpdate && <LoadingBox></LoadingBox>}
+        {errorUpdate && <MessageBox variant="danger">{errorUpdate}</MessageBox>}
+
         {loading ? (
           <LoadingBox></LoadingBox>
         ) : error ? (
@@ -124,12 +156,12 @@ export default function ProductEditScreen() {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               ></textarea>
-              <div>
-                <label></label>
-                <button className="primary" type="submit">
-                  Update
-                </button>
-              </div>
+            </div>
+            <div>
+              <label></label>
+              <button className="primary" type="submit">
+                Update
+              </button>
             </div>
           </>
         )}

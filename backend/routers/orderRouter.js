@@ -1,9 +1,19 @@
 import express from "express";
 import expressAsyncHandler from "express-async-handler";
-import { isAuth } from "../utils.js";
+import { isAdmin, isAuth } from "../utils.js";
 import Order from "../models/orderModal";
 const orderRouter = express.Router();
-
+orderRouter.get(
+  "/",
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    // i'm going put into object,it means that return all orders because I am admin and i want all orders
+    //i am using populate function and form collection get only the name of user.
+    const orders = await Order.find({}).populate("user", "name");
+    res.send(orders);
+  })
+);
 orderRouter.get(
   "/mine",
   isAuth,

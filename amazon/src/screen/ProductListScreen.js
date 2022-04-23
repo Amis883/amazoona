@@ -61,7 +61,6 @@ export default function ProductListScreen() {
       dispatch(deleteProduct(product._id));
     }
   };
-  console.log(successDelete);
   return (
     <div>
       <div className="row">

@@ -22,8 +22,9 @@
     "react-router-dom": "6.0.2",
     "react-scripts": "5.0.0"
   },
+  "engines": {"node":"12.4.0","yarn":"6.9.0"},
   "scripts": {
-    "build": "cd amazon && yarn add && yarn run build",
+    "build": "cd amazon && npm install && npm run build",
     "start": "nodemon --watch backend  --exec node --experimental-modules --es-module-specifier-resolution=node  backend/server.js"
   },
   "eslintConfig": {

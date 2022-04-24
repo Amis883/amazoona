@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import productRouter from "./routers/productRouter.js";
 import userRouter from "./routers/userRouter.js";
 import orderRouter from "./routers/orderRouter";
+import path from "path";
 
 dotenv.config();
 const app = express();
@@ -34,7 +35,6 @@ app.use("/api/orders", orderRouter);
 app.get("/api/config/paypal", (req, res) => {
   res.send(process.env.PAYPAL_CLIENT_ID || "sb");
 });
-const path = require("path");
 const __dirname = path.resolve();
 app.use(express.static(path.join(__dirname, "/amazon/build")));
 app.get("*", (req, res) =>

@@ -2,27 +2,43 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { detailsOrder, payOrder } from "../actions/orderActions";
+import { deliverOrder, detailsOrder, payOrder } from "../actions/orderActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import { PayPalButton } from "react-paypal-button-v2";
-import { ORDER_PAY_RESET } from "../constants/orderConstants";
+import {
+  ORDER_DELIVER_RESET,
+  ORDER_PAY_RESET,
+} from "../constants/orderConstants";
 export default function OrderScreen(props) {
+  const dispatch = useDispatch();
   const params = useParams();
   const { id: orderId } = params;
-  // const orderId = props.match.params.id;
   const [sdkReady, setSdkReady] = useState(false);
-  //fetch order details from redux store
+
+  //fetch ORDER_DETAILS from redux store
   const orderDetails = useSelector((state) => state.orderDetails);
   const { order, loading, error } = orderDetails;
-  const dispatch = useDispatch();
-  //get order pay from redux...get accssee to reduce and from the stste and i gonna get only orderpay
+  //---DELIVERED---
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
+
+  //get ORDER_PAY from redux...get accssee to reduce and from the stste and i gonna get only orderpay
   const orderPay = useSelector((state) => state.orderPay);
   const {
     loading: loadingPay,
     error: errorPay,
     success: successPay,
   } = orderPay;
+
+  //--ORDER_DELIVERED--
+  const orderDeliver = useSelector((state) => state.orderDeliver);
+  const {
+    loading: loadingDeliver,
+    error: errorDeliver,
+    success: successDeliver,
+  } = orderDeliver;
+
   useEffect(() => {
     const addPayPalScript = async () => {
       const { data } = await axios.get("/api/config/paypal");
@@ -38,8 +54,16 @@ export default function OrderScreen(props) {
       document.body.appendChild(script);
     };
     //order does not loaded from backend
-    if (!order || successPay || (order && order._id !== orderId)) {
+    if (
+      !order ||
+      successPay ||
+      successDeliver ||
+      (order && order._id !== orderId)
+    ) {
+      // RESET vase inke dobare nakhayem ino az backend begirim mizarm
       dispatch({ type: ORDER_PAY_RESET });
+      dispatch({ type: ORDER_DELIVER_RESET });
+
       dispatch(detailsOrder(orderId));
     } else {
       //if i have order
@@ -58,6 +82,10 @@ export default function OrderScreen(props) {
   const successPaymentHandler = (paymentResult) => {
     //paymentresult : is  result in payment  on paypal
     dispatch(payOrder(order, paymentResult));
+  };
+
+  const deliverHandler = () => {
+    dispatch(deliverOrder(order._id));
   };
   return loading ? (
     <LoadingBox></LoadingBox>
@@ -168,7 +196,7 @@ export default function OrderScreen(props) {
                   </div>
                 </div>
               </li>
-              {/* check if order .ispaid is false   */}
+              {/* check if order.ispaid is false   */}
               {!order.isPaid && (
                 <li>
                   {/* if sdkready is false means i am still loading paypal */}
@@ -187,6 +215,17 @@ export default function OrderScreen(props) {
                       ></PayPalButton>
                     </>
                   )}
+                </li>
+              )}
+              {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                <li>
+                  <button
+                    type="button"
+                    className="primary black"
+                    onClick={deliverHandler}
+                  >
+                    Deliver Order
+                  </button>
                 </li>
               )}
             </ul>

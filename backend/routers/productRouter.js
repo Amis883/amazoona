@@ -1,10 +1,8 @@
 import express from "express";
 import expressAsyncHandler from "express-async-handler";
-import res from "express/lib/response";
 import data from "../data.js";
 import Product from "../models/productModel.js";
 import { isAdmin, isAuth } from "../utils.js";
-import { updateUserProfile } from "../../amazon/src/actions/userActions";
 const productRouter = express.Router();
 productRouter.get(
   "/",

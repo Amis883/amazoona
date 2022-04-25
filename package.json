@@ -27,6 +27,7 @@
     "npm": "8.7.0"
   },
   "scripts": {
+    "build": "cd amazon && npm install && npm run build",
     "start": "nodemon --watch backend  --exec node --experimental-modules --es-module-specifier-resolution=node  backend/server.js"
   },
   "eslintConfig": {

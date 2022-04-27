@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { listUsers } from "../actions/userActions";
+import { deleteUser, listUsers } from "../actions/userActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 
@@ -9,12 +9,31 @@ export default function UserListScreen() {
   const dispatch = useDispatch();
   const userList = useSelector((state) => state.userList);
   const { loading, error, users } = userList;
+
+  const userDelete = useSelector((state) => state.userDelete);
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = userDelete;
+
   useEffect(() => {
     dispatch(listUsers());
-  }, [dispatch]);
+  }, [dispatch, successDelete]);
+
+  const deleteHandler = (user) => {
+    if (window.confirm("Are you sure?")) {
+      dispatch(deleteUser(user._id));
+    }
+  };
   return (
     <div>
       <h1>Users</h1>
+      {loadingDelete && <LoadingBox></LoadingBox>}
+      {errorDelete && <MessageBox variant="danger">{error}</MessageBox>}
+      {successDelete && (
+        <MessageBox variant="danger">User Deleted Successfully</MessageBox>
+      )}
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (
@@ -43,7 +62,11 @@ export default function UserListScreen() {
                   <button type="button" className="small">
                     Edit
                   </button>
-                  <button type="button" className="small">
+                  <button
+                    type="button"
+                    className="small"
+                    onClick={() => deleteHandler(user)}
+                  >
                     Delete
                   </button>
                 </td>

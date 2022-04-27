@@ -17,6 +17,7 @@ userRouter.post(
   "/signin",
   expressAsyncHandler(async (req, res) => {
     const user = await User.findOne({ email: req.body.email });
+    // await User.remove({});
     if (user) {
       if (bcrypt.compareSync(req.body.password, user.password)) {
         res.send({
@@ -24,7 +25,6 @@ userRouter.post(
           name: user.name,
           email: user.email,
           isAdmin: user.isAdmin,
-          isSeller: user.isSeller,
           token: generateToken(user),
         });
         return;
@@ -36,6 +36,7 @@ userRouter.post(
 userRouter.post(
   "/register",
   expressAsyncHandler(async (req, res) => {
+    // await User.remove({});
     const user = new User({
       name: req.body.name,
       email: req.body.email,
@@ -100,6 +101,24 @@ userRouter.get(
   expressAsyncHandler(async (req, res) => {
     const users = await User.find({});
     res.send(users);
+  })
+);
+userRouter.delete(
+  "/:id",
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id);
+    if (user) {
+      if (user.email === "admin@example.com") {
+        res.status(400).send({ message: "Can Not Deleted Admin User" });
+        return;
+      }
+      const deleteUser = await user.remove();
+      res.send({ message: "User Deleted", user: deleteUser });
+    } else {
+      res.status(404).send({ message: "User Not Found" });
+    }
   })
 );
 

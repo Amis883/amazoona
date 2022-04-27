@@ -34,8 +34,8 @@ export default function OrderScreen(props) {
   //--ORDER_DELIVERED--
   const orderDeliver = useSelector((state) => state.orderDeliver);
   const {
-    loading: loadingDeliver,
-    error: errorDeliver,
+    // loading: loadingDeliver,
+    // error: errorDeliver,
     success: successDeliver,
   } = orderDeliver;
 
@@ -87,6 +87,7 @@ export default function OrderScreen(props) {
   const deliverHandler = () => {
     dispatch(deliverOrder(order._id));
   };
+
   return loading ? (
     <LoadingBox></LoadingBox>
   ) : error ? (

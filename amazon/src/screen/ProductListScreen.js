@@ -12,10 +12,13 @@ import {
   PRODUCT_CREATE_RESET,
   PRODUCT_DELETE_RESET,
 } from "../constants/productConstants";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 export default function ProductListScreen() {
   const navigate = useNavigate();
+  const { pageNumber = 1 } = useParams();
+  const { pathname } = useLocation();
+  const sellerMode = pathname.indexOf("/seller") >= 0;
   const dispatch = useDispatch();
 
   //---GETTING-DATA----
@@ -38,7 +41,8 @@ export default function ProductListScreen() {
     error: errorDelete,
     success: successDelete,
   } = productDelete;
-
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
   useEffect(() => {
     // it means that I successfully created a product so I need to dispatch reset.
     if (successCreate) {
@@ -48,7 +52,7 @@ export default function ProductListScreen() {
     if (successDelete) {
       dispatch({ type: PRODUCT_DELETE_RESET });
     }
-    dispatch(listProducts());
+    dispatch(listProducts({ seller: sellerMode ? userInfo._id : "" }));
   }, [createdProduct, dispatch, navigate, successCreate, successDelete]);
 
   //---CREATE---

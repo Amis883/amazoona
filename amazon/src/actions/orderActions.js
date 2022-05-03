@@ -115,25 +115,27 @@ export const listOrderMine = () => async (dispatch, getState) => {
 
 //catch(error) means any error related ajax request in the backend
 
-export const listOrders = () => async (dispatch, getState) => {
-  dispatch({ type: ORDER_LIST_REQUEST });
-  const {
-    userSignin: { userInfo },
-  } = getState();
-  try {
-    const { data } = await axios.get("/api/orders", {
-      headers: { Authorization: `Bearer ${userInfo.token}` },
-    });
-    // console.log(data);
-    dispatch({ type: ORDER_LIST_SUCCESS, payload: data });
-  } catch (error) {
-    const message =
-      error.response && error.response.data.message
-        ? error.response.data.message
-        : error.message;
-    dispatch({ type: ORDER_LIST_SUCCESS, payload: message });
-  }
-};
+export const listOrders =
+  ({ seller = "" }) =>
+  async (dispatch, getState) => {
+    dispatch({ type: ORDER_LIST_REQUEST });
+    const {
+      userSignin: { userInfo },
+    } = getState();
+    try {
+      const { data } = await axios.get(`/api/orders?${seller}`, {
+        headers: { Authorization: `Bearer ${userInfo.token}` },
+      });
+      // console.log(data);
+      dispatch({ type: ORDER_LIST_SUCCESS, payload: data });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      dispatch({ type: ORDER_LIST_SUCCESS, payload: message });
+    }
+  };
 
 export const deleteOrder = (orderId) => async (dispatch, getState) => {
   dispatch({ type: ORDER_DELETE_REQUEST, payload: orderId });

@@ -3,9 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteOrder, listOrders } from "../actions/orderActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { ORDER_DELETE_RESET } from "../constants/orderConstants";
 export default function OrderListScreen() {
+  const { pageNumber = 1 } = useParams();
+  const { pathname } = useLocation();
+  const sellerMode = pathname.indexOf("/seller") >= 0;
   const navigate = useNavigate();
   const orderList = useSelector((state) => state.orderList);
   const { loading, error, orders } = orderList;
@@ -17,12 +20,14 @@ export default function OrderListScreen() {
     success: successDelete,
   } = orderDelete;
   const dispatch = useDispatch();
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
   useEffect(() => {
     // i need to reset success ,delete because it's not going to delete ,
     // it's not gonna to order for second delete
     dispatch({ type: ORDER_DELETE_RESET });
-    dispatch(listOrders());
-  }, [dispatch, successDelete]);
+    dispatch(listOrders({ seller: sellerMode ? userInfo._id : "" }));
+  }, [dispatch, sellerMode, successDelete, userInfo._id]);
 
   //--Delete---
   const deleteHandler = (order) => {

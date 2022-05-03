@@ -1,16 +1,21 @@
 import express from "express";
 import expressAsyncHandler from "express-async-handler";
-import { isAdmin, isAuth } from "../utils.js";
+import { isAuth, isSellerOrAdmin } from "../utils.js";
 import Order from "../models/orderModal";
 const orderRouter = express.Router();
 orderRouter.get(
   "/",
   isAuth,
-  isAdmin,
+  isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
+    const seller = req.query.seller || "";
+    const sellerFilter = seller ? { seller } : {};
     // i'm going put into object,it means that return all orders because I am admin and i want all orders
     //i am using populate function and form collection get only the name of user.
-    const orders = await Order.find({}).populate("user", "name");
+    const orders = await Order.find({ ...sellerFilter }).populate(
+      "user",
+      "name"
+    );
     res.send(orders);
   })
 );
@@ -30,6 +35,7 @@ orderRouter.post(
       res.status(400).send({ message: "Cart is empty" });
     } else {
       const order = new Order({
+        seller: req.body.orderItems[0].seller,
         orderItems: req.body.orderItems,
         shippingAddress: req.body.shippingAddress,
         paymentMethod: req.body.paymentMethod,

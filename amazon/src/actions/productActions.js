@@ -15,11 +15,11 @@ import {
   PRODUCT_UPDATE_SUCCESS,
 } from "../constants/productConstants";
 import axios from "axios";
-export const listProducts = () => {
+export const listProducts = ({ seller = "" }) => {
   return async (dispatch) => {
     dispatch({ type: PRODUCT_LIST_REQUEST });
     try {
-      const response = await axios.get("api/products/");
+      const response = await axios.get(`/api/products?${seller}`);
       return dispatch({ type: PRODUCT_LIST_SUCCESS, payload: response });
     } catch (error) {
       return dispatch({ type: PRODUCT_LIST_FAIL, payload: error.message });

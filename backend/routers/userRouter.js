@@ -1,20 +1,21 @@
 import express from "express";
 import expressAsyncHandler from "express-async-handler";
-import bcrypt from "bcrypt";
-import { generateToken, isAdmin, isAuth } from "../utils";
-import data from "../data";
+import bcrypt from "bcryptjs";
+import data from "../data.js";
 import User from "../models/userModel.js";
+import { generateToken, isAdmin, isAuth } from "../utils.js";
 
 const userRouter = express.Router();
-// userRouter.get(
-//   '/top-sellers',
-//   expressAsyncHandler(async (req, res) => {
-//     const topSellers = await User.find({ isSeller: true })
-//       .sort({ 'seller.rating': -1 })
-//       .limit(3);
-//     res.send(topSellers);
-//   })
-// );
+
+userRouter.get(
+  "/top-sellers",
+  expressAsyncHandler(async (req, res) => {
+    const topSellers = await User.find({ isSeller: true })
+      .sort({ "seller.rating": -1 })
+      .limit(3);
+    res.send(topSellers);
+  })
+);
 
 userRouter.get(
   "/seed",
@@ -49,8 +50,6 @@ userRouter.post(
 userRouter.post(
   "/register",
   expressAsyncHandler(async (req, res) => {
-    // await User.remove({});
-
     const user = new User({
       name: req.body.name,
       email: req.body.email,
@@ -67,6 +66,7 @@ userRouter.post(
     });
   })
 );
+
 userRouter.get(
   "/:id",
   expressAsyncHandler(async (req, res) => {
@@ -107,6 +107,7 @@ userRouter.put(
     }
   })
 );
+
 userRouter.get(
   "/",
   isAuth,
@@ -116,6 +117,7 @@ userRouter.get(
     res.send(users);
   })
 );
+
 userRouter.delete(
   "/:id",
   isAuth,
@@ -124,7 +126,7 @@ userRouter.delete(
     const user = await User.findById(req.params.id);
     if (user) {
       if (user.email === "admin@example.com") {
-        res.status(400).send({ message: "Can Not Deleted Admin User" });
+        res.status(400).send({ message: "Can Not Delete Admin User" });
         return;
       }
       const deleteUser = await user.remove();
@@ -134,6 +136,7 @@ userRouter.delete(
     }
   })
 );
+
 userRouter.put(
   "/:id",
   isAuth,

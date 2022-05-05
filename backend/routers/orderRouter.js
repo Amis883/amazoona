@@ -1,7 +1,7 @@
 import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import { isAuth, isSellerOrAdmin } from "../utils.js";
-import Order from "../models/orderModal";
+import Order from "../models/orderModal.js";
 const orderRouter = express.Router();
 orderRouter.get(
   "/",

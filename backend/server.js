@@ -19,8 +19,6 @@ const connectDB = async () => {
         authSource: "admin",
         user: "mongoadmin",
         pass: "secret",
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
       }
     );
   } catch (error) {

@@ -12,11 +12,10 @@ import {
   PRODUCT_CREATE_RESET,
   PRODUCT_DELETE_RESET,
 } from "../constants/productConstants";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function ProductListScreen() {
   const navigate = useNavigate();
-  const { pageNumber = 1 } = useParams();
   const { pathname } = useLocation();
   const sellerMode = pathname.indexOf("/seller") >= 0;
   const dispatch = useDispatch();
@@ -53,7 +52,15 @@ export default function ProductListScreen() {
       dispatch({ type: PRODUCT_DELETE_RESET });
     }
     dispatch(listProducts({ seller: sellerMode ? userInfo._id : "" }));
-  }, [createdProduct, dispatch, navigate, successCreate, successDelete]);
+  }, [
+    createdProduct,
+    dispatch,
+    navigate,
+    sellerMode,
+    successCreate,
+    successDelete,
+    userInfo._id,
+  ]);
 
   //---CREATE---
   const createHandler = () => {

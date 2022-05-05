@@ -3,25 +3,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteOrder, listOrders } from "../actions/orderActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { ORDER_DELETE_RESET } from "../constants/orderConstants";
 export default function OrderListScreen() {
-  const { pageNumber = 1 } = useParams();
+  const navigate = useNavigate();
   const { pathname } = useLocation();
   const sellerMode = pathname.indexOf("/seller") >= 0;
-  const navigate = useNavigate();
   const orderList = useSelector((state) => state.orderList);
   const { loading, error, orders } = orderList;
-
   const orderDelete = useSelector((state) => state.orderDelete);
   const {
     loading: loadingDelete,
     error: errorDelete,
     success: successDelete,
   } = orderDelete;
-  const dispatch = useDispatch();
+
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
+  const dispatch = useDispatch();
   useEffect(() => {
     // i need to reset success ,delete because it's not going to delete ,
     // it's not gonna to order for second delete
@@ -61,7 +60,8 @@ export default function OrderListScreen() {
             {orders.map((order) => (
               <tr key={order._id}>
                 <td>{order._id}</td>
-                <td>{order.user}</td>
+                <td>{order._id}</td>
+                {/* <td>{order.user.name}</td> */}
                 <td>{order.createdAt.substring(0, 10)}</td>
                 <td>{order.totalPrice.toFixed(2)}</td>
                 <td>{order.isPaid ? order.paidAt.substring(0, 10) : "No"}</td>

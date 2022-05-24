@@ -136,28 +136,30 @@ export default function OrderScreen(props) {
               <div className="card card-body">
                 <h2>Order Items</h2>
                 <ul>
-                  {order.orderItems.map((item) => (
-                    <li key={item.product}>
-                      <div className="row">
-                        <div>
-                          <img
-                            src={item.image}
-                            alt={item.name}
-                            className="small"
-                          ></img>
-                        </div>
-                        <div className="min-30">
-                          <Link to={`/product/${item.product}`}>
-                            {item.name}
-                          </Link>
-                        </div>
+                  {order.length === 0 &&
+                    order.orderItems.map((item) => (
+                      <li key={item.product}>
+                        <div className="row">
+                          <div>
+                            <img
+                              src={item.image}
+                              alt={item.name}
+                              className="small"
+                            ></img>
+                          </div>
+                          <div className="min-30">
+                            <Link to={`/product/${item.product}`}>
+                              {item.name}
+                            </Link>
+                          </div>
 
-                        <div>
-                          {item.qty} x ${item.price} = ${item.qty * item.price}
+                          <div>
+                            {item.qty} x ${item.price} = $
+                            {item.qty * item.price}
+                          </div>
                         </div>
-                      </div>
-                    </li>
-                  ))}
+                      </li>
+                    ))}
                 </ul>
               </div>
             </li>

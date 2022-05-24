@@ -114,7 +114,7 @@ function App() {
         </header>
         <main>
           <Routes>
-            <Route path="/seller/:id" element={<SellerScreen />} />
+            <Route path="/seller/:id" element={<SellerScreen />}></Route>
             <Route path="/cart/:id" element={<CartScreen />} />
             <Route path="/orderhistory" element={<OrderHistoryScreen />} />
             <Route path="/" element={<HomeScreen />} />
@@ -139,16 +139,15 @@ function App() {
             />
             <Route
               path="/productlist"
-              exact
               element={
                 <AdminRoute>
                   <ProductListScreen />
                 </AdminRoute>
               }
             />
+
             <Route
               path="/orderlist"
-              exact
               element={
                 <AdminRoute>
                   <OrderListScreen />
@@ -174,9 +173,9 @@ function App() {
             <Route
               path="/productlist/seller"
               element={
-                <AdminRoute>
+                <SellerRoute>
                   <ProductListScreen />
-                </AdminRoute>
+                </SellerRoute>
               }
             />
             <Route

@@ -19,7 +19,7 @@ export const listProducts = ({ seller = "" }) => {
   return async (dispatch) => {
     dispatch({ type: PRODUCT_LIST_REQUEST });
     try {
-      const response = await axios.get(`/api/products?${seller}`);
+      const response = await axios.get(`/api/products?seller=${seller}`);
       return dispatch({ type: PRODUCT_LIST_SUCCESS, payload: response });
     } catch (error) {
       return dispatch({ type: PRODUCT_LIST_FAIL, payload: error.message });

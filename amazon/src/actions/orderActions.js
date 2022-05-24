@@ -123,7 +123,7 @@ export const listOrders =
       userSignin: { userInfo },
     } = getState();
     try {
-      const { data } = await axios.get(`/api/orders?${seller}`, {
+      const { data } = await axios.get(`/api/orders?seller=${seller}`, {
         headers: { Authorization: `Bearer ${userInfo.token}` },
       });
       // console.log(data);

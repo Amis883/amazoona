@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import CartScreen from "./screen/CartScreen";
 import HomeScreen from "./screen/HomeScreen";
@@ -24,6 +24,7 @@ import SellerRoute from "./components/SellerRoute";
 import SellerScreen from "./screen/SellerScreen";
 import SearchBox from "./components/SearchBox";
 import SearchScreen from "./screen/SearchScreen";
+import { listProductsCategories } from "./actions/productActions";
 
 function App() {
   const cart = useSelector((state) => state.cart);
@@ -34,6 +35,10 @@ function App() {
   const signoutHandler = () => {
     dispatch(signout());
   };
+  useEffect(() => {
+    dispatch(listProductsCategories());
+  }, [dispatch]);
+
   return (
     <BrowserRouter>
       <div className="grid-container">
@@ -134,9 +139,18 @@ function App() {
             <Route path="/placeorder" element={<PlaceOrderScreen />} />
             <Route path="/order/:id" element={<OrderScreen />} />
             <Route path="/signin" element={<SigninScreen />} />
+            <Route
+              path="/search/category/:category"
+              element={<SearchScreen />}
+            ></Route>
+            <Route
+              path="/search/category/:category/name/:name"
+              element={<SearchScreen />}
+            ></Route>
+
             <Route path="/search/name" element={<SearchScreen />}></Route>
             <Route
-              path="/search/name/:name"
+              path="/search/name/:name?"
               element={<SearchScreen />}
               exact
             ></Route>

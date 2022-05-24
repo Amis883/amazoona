@@ -1,21 +1,39 @@
 import React from "react";
 import { useEffect } from "react";
 import { listProducts } from "../actions/productActions";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import Product from "../components/Product";
 
 export default function SearchScreen() {
-  const { name = "all" } = useParams();
+  const { name = "all", category = "all" } = useParams();
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
+  const productCategoryList = useSelector((state) => state.productCategoryList);
+  const {
+    loading: loadingCategory,
+    error: errorCategory,
+    categories,
+  } = productCategoryList;
   useEffect(() => {
-    dispatch(listProducts({ name: name !== "all" ? name : "" }));
-  }, [dispatch, name]);
-  console.log(products);
+    dispatch(
+      listProducts({
+        name: name !== "all" ? name : "",
+        category: category !== "all" ? category : "",
+      })
+    );
+  }, [dispatch, name, category]);
+
+  const getFilterUrl = (filter) => {
+    const filterCategory = filter.category || category;
+    const filterName = filter.name || name;
+
+    return `/search/category/${filterCategory}/name/${filterName}`;
+  };
+  console.log(productCategoryList);
   return (
     <div>
       <div className="row ">
@@ -29,10 +47,34 @@ export default function SearchScreen() {
       </div>
       <div className="row top">
         <div className="col-1">
-          <h3>Department</h3>
-          <ul>
-            <li>Category 1</li>
-          </ul>
+          <h3>Department</h3>{" "}
+          {loadingCategory ? (
+            <LoadingBox></LoadingBox>
+          ) : errorCategory ? (
+            <MessageBox variant="danger">{error}</MessageBox>
+          ) : (
+            <ul>
+              <li>
+                <Link
+                  className={"all" === category ? "active" : ""}
+                  to={getFilterUrl({ category: "all" })}
+                >
+                  Any
+                </Link>
+              </li>
+              {categories &&
+                categories.map((c) => (
+                  <li key={c}>
+                    <Link
+                      className={c === category ? "active" : ""}
+                      to={getFilterUrl({ category: c })}
+                    >
+                      {c}
+                    </Link>
+                  </li>
+                ))}
+            </ul>
+          )}
         </div>
         <div className="col-3">
           {loading ? (

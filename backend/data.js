@@ -74,7 +74,7 @@ const data = {
       description: "high quality product",
     },
     {
-      name: "Nike Slim Pantss",
+      name: "Nike Slim Pants",
       category: "Pants",
       image: "/images/p5.jpg",
       price: 78,
@@ -97,7 +97,7 @@ const data = {
     },
     {
       name: "Adidas Slim Pants sade",
-      category: "Shirt",
+      category: "Pants",
       image: "/images/p5.jpg",
       price: 200,
       countInStock: 35,

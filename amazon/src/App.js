@@ -22,6 +22,8 @@ import UserListScreen from "./screen/UserListScreen";
 import UserEditScreen from "./screen/UserEditScreen";
 import SellerRoute from "./components/SellerRoute";
 import SellerScreen from "./screen/SellerScreen";
+import SearchBox from "./components/SearchBox";
+import SearchScreen from "./screen/SearchScreen";
 
 function App() {
   const cart = useSelector((state) => state.cart);
@@ -40,6 +42,9 @@ function App() {
             <Link to="/" className="brand">
               amazona
             </Link>
+          </div>
+          <div>
+            <SearchBox />
           </div>
           <div>
             <Link to="/Cart">
@@ -129,6 +134,13 @@ function App() {
             <Route path="/placeorder" element={<PlaceOrderScreen />} />
             <Route path="/order/:id" element={<OrderScreen />} />
             <Route path="/signin" element={<SigninScreen />} />
+            <Route path="/search/name" element={<SearchScreen />} exact></Route>
+            <Route
+              path="/search/name/:name"
+              element={<SearchScreen />}
+              exact
+            ></Route>
+
             <Route
               path="/profile"
               element={

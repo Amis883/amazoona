@@ -134,7 +134,7 @@ function App() {
             <Route path="/placeorder" element={<PlaceOrderScreen />} />
             <Route path="/order/:id" element={<OrderScreen />} />
             <Route path="/signin" element={<SigninScreen />} />
-            <Route path="/search/name" element={<SearchScreen />} exact></Route>
+            <Route path="/search/name" element={<SearchScreen />}></Route>
             <Route
               path="/search/name/:name"
               element={<SearchScreen />}

@@ -22,8 +22,9 @@ export default function HomeScreen() {
   } = userTopSellersList;
 
   useEffect(() => {
-    dispatch(listTopSellers());
     dispatch(listProducts({}));
+    dispatch(listTopSellers());
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

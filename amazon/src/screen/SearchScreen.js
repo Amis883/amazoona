@@ -6,11 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import Product from "../components/Product";
-import { useNavigate } from "react-router-dom";
 
 export default function SearchScreen() {
-  const navigate = useNavigate();
-
   const { name = "all" } = useParams();
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
@@ -18,6 +15,7 @@ export default function SearchScreen() {
   useEffect(() => {
     dispatch(listProducts({ name: name !== "all" ? name : "" }));
   }, [dispatch, name]);
+  console.log(products);
   return (
     <div>
       <div className="row ">
@@ -48,7 +46,7 @@ export default function SearchScreen() {
               )}
 
               <div className="row center">
-                {products.length === 0 &&
+                {products.length > 0 &&
                   products.data.products.map((product) => (
                     <Product key={product._id} product={product}></Product>
                   ))}

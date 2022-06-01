@@ -6,9 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import Product from "../components/Product";
+import { prices } from "../utils";
 
 export default function SearchScreen() {
-  const { name = "all", category = "all" } = useParams();
+  const { name = "all", category = "all", min = 0, max = 0 } = useParams();
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
@@ -23,17 +24,21 @@ export default function SearchScreen() {
       listProducts({
         name: name !== "all" ? name : "",
         category: category !== "all" ? category : "",
+        min,
+        max,
       })
     );
-  }, [dispatch, name, category]);
+  }, [dispatch, name, category, min, max]);
 
   const getFilterUrl = (filter) => {
     const filterCategory = filter.category || category;
     const filterName = filter.name || name;
+    const filterMin = filter.min ? filter.min : filter.min === 0 ? 0 : min;
+    const filterMax = filter.max || max;
 
-    return `/search/category/${filterCategory}/name/${filterName}`;
+    return `/search/category/${filterCategory}/name/${filterName}/min/${filterMin}/max/${filterMax}`;
   };
-  console.log(productCategoryList);
+  console.log("productList", productList);
   return (
     <div>
       <div className="row ">
@@ -47,34 +52,52 @@ export default function SearchScreen() {
       </div>
       <div className="row top">
         <div className="col-1">
-          <h3>Department</h3>{" "}
+          <h3>Department</h3>
           {loadingCategory ? (
             <LoadingBox></LoadingBox>
           ) : errorCategory ? (
             <MessageBox variant="danger">{error}</MessageBox>
           ) : (
-            <ul>
-              <li>
-                <Link
-                  className={"all" === category ? "active" : ""}
-                  to={getFilterUrl({ category: "all" })}
-                >
-                  Any
-                </Link>
-              </li>
-              {categories &&
-                categories.map((c) => (
-                  <li key={c}>
-                    <Link
-                      className={c === category ? "active" : ""}
-                      to={getFilterUrl({ category: c })}
-                    >
-                      {c}
-                    </Link>
-                  </li>
-                ))}
-            </ul>
+            <div>
+              {" "}
+              <ul>
+                <li>
+                  <Link
+                    className={"all" === category ? "active" : ""}
+                    to={getFilterUrl({ category: "all" })}
+                  >
+                    Any
+                  </Link>
+                </li>
+                {categories &&
+                  categories.map((c) => (
+                    <li key={c}>
+                      <Link
+                        className={c === category ? "active" : ""}
+                        to={getFilterUrl({ category: c })}
+                      >
+                        {c}
+                      </Link>
+                    </li>
+                  ))}
+              </ul>
+            </div>
           )}
+        </div>
+        <div>
+          <h3>Price</h3>
+          {prices.map((p) => {
+            <li key={p.name}>
+              <Link
+                to={getFilterUrl({ min: p.min, max: p.max })}
+                className={
+                  `${p.min}-${p.max}` === `${min}-${max}` ? "active" : ""
+                }
+              >
+                {p.name}
+              </Link>
+            </li>;
+          })}
         </div>
         <div className="col-3">
           {loading ? (
@@ -88,10 +111,9 @@ export default function SearchScreen() {
               )}
 
               <div className="row center">
-                {products.length > 0 &&
-                  products.data.products.map((product) => (
-                    <Product key={product._id} product={product}></Product>
-                  ))}
+                {products.map((product) => (
+                  <Product key={product._id} product={product}></Product>
+                ))}
               </div>
             </>
           )}

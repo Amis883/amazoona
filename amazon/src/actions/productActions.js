@@ -19,12 +19,18 @@ import {
   PRODUCT_UPDATE_SUCCESS,
 } from "../constants/productConstants";
 import axios from "axios";
-export const listProducts = ({ seller = "", name = "", category = "" }) => {
+export const listProducts = ({
+  seller = "",
+  name = "",
+  category = "",
+  min = 0,
+  max = 0,
+}) => {
   return async (dispatch) => {
     dispatch({ type: PRODUCT_LIST_REQUEST });
     try {
       const data = await axios.get(
-        `/api/products?seller=${seller}&name=${name}&category=${category}`
+        `/api/products?seller=${seller}&name=${name}&category=${category}&min=${min}&max=${max}`
       );
       return dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
     } catch (error) {

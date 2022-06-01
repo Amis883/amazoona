@@ -148,11 +148,15 @@ function App() {
               element={<SearchScreen />}
             ></Route>
 
-            <Route path="/search/name" element={<SearchScreen />}></Route>
+            <Route path="/search/name" element={<SearchScreen />} exact />
             <Route
               path="/search/name/:name?"
               element={<SearchScreen />}
               exact
+            ></Route>
+            <Route
+              path="/search/category/:category/name/:name/min/:min/max/:max"
+              element={<SearchScreen />}
             ></Route>
 
             <Route

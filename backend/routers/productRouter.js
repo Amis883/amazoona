@@ -12,15 +12,19 @@ productRouter.get(
     const seller = req.query.seller || "";
     const name = req.query.name || "";
     const category = req.query.category || "";
-
+    const min =
+      req.query.min && Number(req.query.min) !== 0 ? Number(req.query.min) : 0;
+    const max =
+      req.query.max && Number(req.query.max) !== 0 ? Number(req.query.max) : 0;
     const sellerFilter = seller ? { seller } : {};
     const categoryFilter = category ? { category } : {};
-
+    const priceFilter = min && max ? { price: { $gtw: min, $lte: max } } : {};
     const nameFilter = name ? { name: { $regex: name, $options: "i" } } : {};
     const products = await Product.find({
       ...sellerFilter,
       ...nameFilter,
       ...categoryFilter,
+      ...priceFilter,
     }).populate(
       "seller",
       "seller.name seller.logo seller.rating seller.numReviews"

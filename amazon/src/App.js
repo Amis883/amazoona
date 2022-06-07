@@ -139,24 +139,26 @@ function App() {
             <Route path="/placeorder" element={<PlaceOrderScreen />} />
             <Route path="/order/:id" element={<OrderScreen />} />
             <Route path="/signin" element={<SigninScreen />} />
+            <Route path="/search/name" element={<SearchScreen />} exact></Route>
             <Route
-              path="/search/category/:category"
-              element={<SearchScreen />}
-            ></Route>
-            <Route
-              path="/search/category/:category/name/:name"
-              element={<SearchScreen />}
-            ></Route>
-
-            <Route path="/search/name" element={<SearchScreen />} exact />
-            <Route
-              path="/search/name/:name?"
+              path="/search/name/:name"
               element={<SearchScreen />}
               exact
             ></Route>
             <Route
-              path="/search/category/:category/name/:name/min/:min/max/:max"
+              path="/search/category/:category"
               element={<SearchScreen />}
+              exact
+            ></Route>
+            <Route
+              path="/search/category/:category/name/:name"
+              element={<SearchScreen />}
+              exact
+            ></Route>
+            <Route
+              path="/search/category/:category/name/:name/min/:min/max/:max/rating/:rating/order/:order/pageNumber/:pageNumber"
+              element={<SearchScreen />}
+              exact
             ></Route>
 
             <Route

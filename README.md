@@ -13,8 +13,8 @@ It is inspired by Amazon and includes features like product listing, shopping ca
 
 ##Run Locally
  1. Clone Repo
-git clone git@github.com:hoda/mern-amazona.git
-cd mern-amazona
+git clone git@github.com:amis883/amazoona.git
+cd amazoona
 
 2. Create .env File
 
@@ -26,7 +26,7 @@ Update the variables inside according to your MongoDB setup.
 
 Local MongoDB
 Install from MongoDB Community Server In .env, set:
-MONGODB_URI=mongodb://localhost/amazona
+MONGODB_URI=mongodb://localhost/amazoona
 
 
 Cloud MongoDB (Atlas)

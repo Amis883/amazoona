@@ -1,3 +1,6 @@
+<img width="1085" height="697" alt="Screenshot 2025-09-28 at 22 04 21" src="https://github.com/user-attachments/assets/6e441164-dff1-4d6d-97d8-f7c469703545" />
+
+
 ##React + MERN - Build E-Commerce Website
 
 This project is a full-stack e-commerce application built using the MERN stack (MongoDB, Express.js, React, Node.js).

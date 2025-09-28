@@ -1,5 +1,5 @@
-<img width="1085" height="697" alt="Screenshot 2025-09-28 at 22 04 21" src="https://github.com/user-attachments/assets/6e441164-dff1-4d6d-97d8-f7c469703545" />
 
+![amazona](https://github.com/user-attachments/assets/b4a3020a-1eab-4031-98dd-22e438242dd0)
 
 ##React + MERN - Build E-Commerce Website
 

@@ -1,4 +1,4 @@
 {
-  "buildCommand": "yarn build",
-  "outputDirectory": "build"
+  "buildCommand": "cd amazon && yarn build",
+  "outputDirectory": "amazon/build"
 }

@@ -63,10 +63,13 @@ export default function HomeScreen() {
           )}
 
           <div className="row center">
-            {products.data &&
+            {products?.data?.products ? (
               products.data.products.map((product) => (
                 <Product key={product._id} product={product} />
-              ))}
+              ))
+            ) : (
+              <LoadingBox />
+            )}
           </div>
         </>
       )}

@@ -1,4 +1,6 @@
 {
-  "buildCommand": "cd amazon && npm install && npm run build",
-  "outputDirectory": "amazon/build"
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/.*", "dest": "/index.html" }
+  ]
 }
